@@ -1,7 +1,7 @@
 package com.priest.sort;
 
 /**
- * 详情 : 快熟排序
+ * 详情 : 快速排序
  * <p>
  * 详细 :
  *
