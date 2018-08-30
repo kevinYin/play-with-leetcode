@@ -12,51 +12,36 @@ public class ValidPalindrome {
     public static boolean validPalindrome(String s) {
         // 2边开始遍历，遇到不同的，想办法确认是删左边还是右边
         char[] array = s.toCharArray();
-        boolean hasRemove = false;
+
         for (int i = 0, j = array.length - 1; i <= j; i++, j--) {
             if (array[i] != array[j]) {
-                if (hasRemove) {
-                    return false;
-                } else {
-                    // 比较左边的前一位是否跟右边的相等，相等，则左边向前移一位
-                    if (array[i + 1] == array[j] || array[i] == array[j - 1]) {
-                        // 可能左边跟右边都可能
-                        boolean leftIsOK = false;
-                        if (array[i + 1] == array[j]) {
-                            leftIsOK = true;
-                            for (int k = i + 1, p = j; k <= p; k++, p--) {
-                                if (array[k] != array[p]) {
-                                    leftIsOK = false;
-                                    break;
-                                }
-                            }
-                        }
-                        if (leftIsOK) {
+                // 比较左边的前一位是否跟右边的相等，相等，则左边向前移一位
+                if (array[i + 1] == array[j] || array[i] == array[j - 1]) {
+                    // 可能左边跟右边都可能
+                    if (array[i + 1] == array[j]) {
+                        if (check(array,i+1, j)) {
                             return true;
                         }
-                        boolean rightIdOK = false;
-                        if (array[i] == array[j - 1]) {
-                            j = j - 1;
-                            rightIdOK = true;
-                            if (j == (i + 1)) {
-                                rightIdOK = array[i] == array[j];
-                            } else {
-                                for (; i <= j; i++, j--) {
-                                    if (array[i] != array[j]) {
-                                        rightIdOK = false;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-                        return leftIsOK || rightIdOK;
-                    } else {
-                        return false;
                     }
+                    if (array[i] == array[j - 1]) {
+                        return check(array, i, j - 1);
+                    }
+                    return false;
+                } else {
+                    return false;
                 }
             }
         }
 
+        return true;
+    }
+
+    private static boolean check(char[] array, int i, int j) {
+        for (; i<=j; i++, j--) {
+            if (array[i] != array[j]) {
+                return false;
+            }
+        }
         return true;
     }
 
