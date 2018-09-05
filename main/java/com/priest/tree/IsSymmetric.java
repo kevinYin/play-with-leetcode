@@ -17,59 +17,26 @@ public class IsSymmetric {
         if (root == null) {
             return true;
         }
-        // 左节点 先序遍历
-        String left = leftErgodic(root.left);
-        // 右节点 后序遍历
-        String right = rightErgodic(root.right);
-        // 比较是否一致
-        return left.equals(right);
+
+        return isSymmetric(root.left, root.right);
     }
 
-    private String leftErgodic(TreeNode root) {
-        if (root == null) {
-            return ",";
+    private boolean isSymmetric(TreeNode left, TreeNode right) {
+
+        if (left == null && right == null) {
+            return true;
+        }
+        if (left == null || right == null) {
+            return false;
+        }
+        if (left.val != right.val) {
+            return false;
         }
 
-        String str = "";
-        if (root.left != null) {
-            str = str + leftErgodic(root.left) + ",";
-        } else {
-            str = str + ",";
-        }
-
-        str = str + root.val;
-
-        if (root.right != null) {
-            str = str + leftErgodic(root.right)  + ",";
-        } else {
-            str = str + ",";
-        }
-
-        return str;
+        // 左右都不为空，递归处理
+        return isSymmetric(left.left, right.right) && isSymmetric(left.right, right.left);
     }
 
-    private String rightErgodic(TreeNode root) {
-        if (root == null) {
-            return ",";
-        }
-        String str = "";
-
-        if (root.right != null) {
-            str = str + rightErgodic(root.right) + ",";
-        } else {
-            str = str + ",";
-        }
-
-        str = str + root.val;
-
-        if (root.left != null) {
-            str = str + rightErgodic(root.left)  + ",";
-        } else {
-            str = str + ",";
-        }
-
-        return str;
-    }
 
     public static void main(String[] args) {
         TreeNode treeNode = new TreeNode(1);
