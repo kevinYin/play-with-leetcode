@@ -13,41 +13,35 @@ import java.util.*;
  */
 public class AverageOfLevels {
 
+    /**
+     * 思路：采用BFS（广度优先搜索）
+     * 先把父节点入栈，然后在一级子节点入栈之前，先将stack全pop出来实现层级遍历
+     */
     public List<Double> averageOfLevels(TreeNode root) {
         if (root == null) {
             return Collections.emptyList();
         }
-        Stack<TreeNode> stack = new Stack<TreeNode>();
-        stack.push(root);
+        // 使用队列，先进先出，在子节点入队列的时候可以 一边 pop 父节点，一边写入子节点，从而节省空间
+        Queue<TreeNode> treeNodes = new LinkedList<>();
+        treeNodes.add(root);
+        List<Double> avgArr = new ArrayList<>();
 
-        List<Double> avgArr = new ArrayList<Double>();
-        if (stack.isEmpty()) {
-            return Collections.emptyList();
-        }
-        while (!stack.isEmpty()) {
-            ArrayList<TreeNode> subNodes = new ArrayList<TreeNode>();
-
-            double num = 0, sum = 0;
-            while (!stack.isEmpty()) {
-                TreeNode pop = stack.pop();
-                num++;
-                sum = sum + pop.val;
-
-                // 处理子节点
+        while (!treeNodes.isEmpty()) {
+            int num = treeNodes.size();
+            double sum = 0;
+            for (int i = 0; i < num; i++) {
+                TreeNode pop = treeNodes.remove();
                 if (pop.left != null) {
-                    subNodes.add(pop.left);
+                    treeNodes.add(pop.left);
                 }
                 if (pop.right != null) {
-                    subNodes.add(pop.right);
+                    treeNodes.add(pop.right);
                 }
+                sum = sum + pop.val;
             }
-            for (TreeNode subNode : subNodes) {
-                stack.push(subNode);
-            }
-            avgArr.add(sum /num);
+            avgArr.add(sum / num);
         }
 
         return avgArr;
     }
-
 }
