@@ -23,23 +23,13 @@ public class InorderTraversal {
         List<Integer> result = new ArrayList<>();
         Stack<TreeNode> stack = new Stack();
         while (!stack.isEmpty() || root != null) {
-            // 先将左节点入栈
-            TreeNode leftNode = root.left;
-            if (leftNode != null) {
+            if (root !=null) {
                 stack.push(root);
-                root = leftNode;
+                root = root.left;
             } else {
-                // 左节点为空，则出栈，root指向当前pop节点
-                result.add(root.val);
-                if (root.right == null) {
-                    if (stack.isEmpty()) {
-                        break;
-                    }
-                    root = stack.pop();
-                    root.left = null;
-                } else {
-                    root = root.right;
-                }
+                TreeNode pop = stack.pop();
+                result.add(pop.val);
+                root = pop.right;
             }
         }
         return result;
