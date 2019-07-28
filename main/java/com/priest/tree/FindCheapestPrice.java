@@ -20,7 +20,7 @@ public class FindCheapestPrice {
     private int result = -1;
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int K) {
         int beginCity = flights[0][0];
-
+        return 0;
     }
 
     /**
